@@ -14,3 +14,8 @@
 - 엔티티 내 collection은 바로 초기화하고 추가로 건드리지 말자. em에서 영속화(db에 삽입)하면 hibernate가 collection을 감싸는데 이 때 건드린다면 의도치 않게 동작할 수 있다.  
 - 칼럼명에 대문자가 있거나 온점이 있다면 SpringBoot의 SpringPhysicalNamingStrategy에서 언더스코어로 알아서 바꿔준다.
 - cascade = CascadeType.ALL을 선언하면 엔티티를 저장,삭제하면 cascade 대상 엔티티도 자동으로 저장,삭제된다. -> A안에 B가 있을 때 A를 저장할 때 B객체를 만들어 저장하면 따로 B.save하지 않아도 B가 자동저장됨
+
+# 3일차
+- save테스트할 때 JPA는 insert쿼리를 수행하지 않는다. JPA가 영속성 컨테스트에 커밋하기 전에 Spring에서 트랜잭션 롤백을 수행하기 때문임. insert쿼리르 보고싶다면 em.flush()를 수행하거나 롤백을 막아야함.
+- 테스트할 때 서버에 작은 메모리DB도 같이 올려서 테스트하면 편하다.
+ㄹ- 테스트는 별도의 yml파일로 설정해서 사용해야한다. 테스트에서 DB를 사용할 때 메모리모드로 사용해야하며(h2:mem:test) 스프링부트는 테스트 yml에 메모리모드로 설정하지 않아도 알아서 해준다.
